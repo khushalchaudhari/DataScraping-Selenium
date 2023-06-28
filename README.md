@@ -1,48 +1,48 @@
-import time             
-import pandas as pd    
-from selenium import webdriver     
-from selenium.webdriver.chrome.service import Service      
-from selenium.webdriver.common.by import By     
-from bs4 import BeautifulSoup       
-from selenium.webdriver.support.ui import Select      
+Data Scraping Code
+This repository contains code for data scraping using Pandas, Selenium, Python, and BeautifulSoup.
 
-s = Service('chromedriver.exe')  
-driver = webdriver.Chrome(service=s)
-driver.implicitly_wait(10)      
-driver.maximize_window()       
-driver.get("https://agmarknet.gov.in/PriceAndArrivals/DatewiseCommodityReport.aspx")
-  
-Select(driver.find_element(By.XPATH,"//select[@id='cphBody_cboYear']")).select_by_index(3)      
-Select(driver.find_element(By.XPATH,"//select[@id='cphBody_cboMonth']")).select_by_visible_text("June")   
-time.sleep(4)       
-Select(driver.find_element(By.XPATH,"//select[@id='cphBody_cboState']")).select_by_visible_text("Maharashtra")      
-time.sleep(4)       
-Select(driver.find_element(By.XPATH,"//select[@id='cphBody_cboCommodity']")).select_by_visible_text("Grapes")     
-time.sleep(4)       
-driver.find_element(By.XPATH,"//input[@id='cphBody_btnSubmit']").click()        
-time.sleep(5)       
-content = driver.page_source        
-soup = BeautifulSoup(content, "html.parser")        
+Requirements
+To run the code in this repository, you need to have the following installed:
 
-c1 = driver.find_elements(By.XPATH,"//tr[@align='center']/td[1]")   
-c2 = driver.find_elements(By.XPATH,"//tr[@align='center']/td[2]")   
-c3 = driver.find_elements(By.XPATH,"//tr[@align='center']/td[3]")   
-c4 = driver.find_elements(By.XPATH,"//tr[@align='center']/td[4]")   
-c5 = driver.find_elements(By.XPATH,"//tr[@align='center']/td[5]")   
-c6 = driver.find_elements(By.XPATH,"//tr[@align='center']/td[6]")   
-c7 = driver.find_elements(By.XPATH,"//tr[@align='center']/td[7]")   
+Python (version X.X.X)
+Pandas (version X.X.X)
+Selenium (version X.X.X)
+BeautifulSoup (version X.X.X)
+Installation
+Clone this repository to your local machine.
 
-data=[]     
-for i in range(len(c1)):        
-    table_data = {'Market':c1[i].text,
-                  'Arrival_Date':c2[i].text,
-                  'Arrivals (Tonnes)':c3[i].text,
-                  'Variety':c4[i].text,
-                  'Minimum Price(Rs./Quintal)':c5[i].text,
-                  'Maximum Price(Rs./Quintal)':c6[i].text,
-                  'Modal Price(Rs./Quintal)':c7[i].text}
-    data.append(table_data)
+bash
+Copy code
+git clone <repository_url>
+Install the required dependencies using pip.
 
-df_data = pd.DataFrame(data)        
-df_data.to_csv('scratching.csv',index=False)        
-driver.quit()
+Copy code
+pip install -r requirements.txt
+Download and install the appropriate web driver for Selenium (e.g., ChromeDriver for Google Chrome).
+
+Usage
+Modify the config.py file to set the desired configurations for the data scraping process, such as URL, search parameters, or data extraction options.
+
+Run the main.py file to start the data scraping process.
+
+css
+Copy code
+python main.py
+The scraped data will be stored in a CSV file named output.csv in the project directory.
+
+Contributing
+Contributions are welcome! If you find any issues or have suggestions for improvement, please feel free to submit a pull request or open an issue.
+
+License
+This project is licensed under the MIT License.
+
+Acknowledgments
+Pandas
+Selenium
+BeautifulSoup
+Disclaimer
+Please ensure that you comply with the terms of service or usage policies of the websites you are scraping data from. Be respectful of the website owners and follow ethical data scraping practices. This code is provided for educational purposes only.
+
+Remember to update the placeholders with the appropriate versions, URLs, and any other relevant information specific to your project. Additionally, include any specific instructions or steps required to set up and run the code successfully.
+
+Feel free to customize and enhance the README file according to your specific needs and project requirements.
